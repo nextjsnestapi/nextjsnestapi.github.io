@@ -1,0 +1,12 @@
+release:
+  label: Release
+  description: New versions and what changed.
+guide:
+  label: Guide
+  description: Walkthroughs and how-tos.
+openapi:
+  label: OpenAPI
+  description: Posts about the OpenAPI/Swagger integration.
+cli:
+  label: CLI
+  description: Posts about the nextjs-nestapi CLI.

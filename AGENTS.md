@@ -59,6 +59,12 @@ Live at **`https://nextjsnestapi.github.io/`** (root domain, no subpath, no hyph
   `npm ci` + `npm run build` → `actions/upload-pages-artifact` → `actions/deploy-pages`).
   Repo Settings → Pages → Source is set to "GitHub Actions". There is **no `gh-pages`
   branch** and `npm run deploy` (`docusaurus deploy`) is NOT the path used — don't run it.
+- **Failure mode seen once:** if Pages Source gets switched to "Deploy from a branch"
+  (`main` / root), GitHub serves the repo root with **Jekyll**, which renders `README.md`
+  as the homepage and the real docs site vanishes (`/intro` → 404, live HTML shows
+  `<meta name="generator" content="Jekyll">`). Fix: set Source back to "GitHub Actions"
+  in the web UI, then push any commit (an empty one is fine) — switching the setting does
+  NOT re-run the workflow on its own.
 - **Push:** SSH key `~/.ssh/nextjsnestapi`; use
   `GIT_SSH_COMMAND="ssh -i ~/.ssh/nextjsnestapi -o IdentitiesOnly=yes"` for git ops.
 - `docusaurus.config.ts` (`url`, `organizationName`, `projectName`, `baseUrl:'/'`) and

@@ -44,7 +44,7 @@
   height: 48px;
   border-radius: 10px;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(34, 211, 238, 0.15));
+  background: linear-gradient(135deg, rgba(46, 133, 85, 0.15), rgba(37, 194, 160, 0.15));
   color: var(--ifm-color-primary);
 }
 

@@ -28,18 +28,22 @@ export class HelloController {
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
+          {siteConfig.tagline}
+        </p>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/intro">
+          <Link
+            className={clsx('button button--lg', styles.buttonPrimary)}
+            to="/intro">
             Get Started
           </Link>
           <Link
-            className="button button--outline button--secondary button--lg"
+            className={clsx('button button--lg', styles.buttonSecondary)}
             to="https://github.com/DeveloperRejaul/nextjs-nestapi">
             View on GitHub
           </Link>

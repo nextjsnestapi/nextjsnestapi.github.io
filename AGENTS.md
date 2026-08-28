@@ -48,44 +48,29 @@ styling).
   output in `build/*.html`, or `npm run serve` for a full static prod-mode check.
 - `npm run build` — static build to `build/`.
 
-## Deployment (status: not yet deployed)
+## Deployment (status: LIVE)
 
-Confirmed final target: **`https://nextjsnestapi.github.io/`** (root domain, no subpath, no
-hyphens — note this differs from the GitHub org name pattern used elsewhere in this
-project's history; `nextjsnestapi` with no hyphen is correct and confirmed with the user
-twice).
+Live at **`https://nextjsnestapi.github.io/`** (root domain, no subpath, no hyphens —
+`nextjsnestapi` with no hyphen is correct and confirmed with the user twice).
 
-To get a GitHub Pages root URL, the repo must be named exactly `<org>.github.io`. Plan
-(agreed with user): rename the existing empty repo `nextjsnestapi/nextjsnestapi` →
-`nextjsnestapi/nextjsnestapi.github.io`, rather than creating a new repo.
-
-**Blocker at last check:** `gh` CLI is not installed on this machine, and no PAT/token is
-available, so the rename can't be done via API from here — repo renames aren't possible over
-plain SSH (SSH keys authenticate git push/pull, not GitHub's repo-settings API). Either
-install `gh` and authenticate it, or ask the user to rename the repo manually via the GitHub
-web UI (Settings → Repository name). Check whether this has already happened before
-re-asking — `gh repo view nextjsnestapi/nextjsnestapi.github.io` (if `gh` is available) or a
-plain `git ls-remote` against the target URL will tell you.
-
-SSH key for pushing to this repo: `~/.ssh/nextjsnestapi` — use
-`GIT_SSH_COMMAND="ssh -i ~/.ssh/nextjsnestapi -o IdentitiesOnly=yes"` for git operations
-against it.
-
-Once the repo is renamed, still needed before deploying:
-- `docusaurus.config.ts`: `url` → `https://nextjsnestapi.github.io`, `organizationName` →
-  `nextjsnestapi`, `projectName` → `nextjsnestapi.github.io` (`baseUrl:'/'` is already
-  correct, don't change it).
-- `static/robots.txt`: `Sitemap:` line → `https://nextjsnestapi.github.io/sitemap.xml`.
-- This repo has **no `.git` yet** (`git status` fails with "not a git repository") — init it,
-  set the remote, and push using the SSH command above.
-- Decide deploy mechanism (`docusaurus deploy` to a `gh-pages` branch vs. a GitHub Actions
-  workflow) — not yet decided with the user, ask before picking one.
-- The sitemap plugin (`lastmod:'date'`) once threw "This Docusaurus site is outside any Git
-  worktree" during build, because there was no `.git` here — this may resolve itself once git
-  is initialized (the error is specifically about a missing git worktree), but hasn't been
-  re-verified since. Watch for it recurring in the first build after `git init`.
-- Show the user the final URL before considering the deploy done — they've asked for this
-  confirmation explicitly more than once.
+- **Repo:** `nextjsnestapi/nextjsnestapi.github.io` (already renamed from the old
+  `nextjsnestapi/nextjsnestapi`). Remote `origin` is the SSH URL.
+- **Mechanism:** GitHub Actions — `.github/workflows/deploy.yml` (push to `main` →
+  `npm ci` + `npm run build` → `actions/upload-pages-artifact` → `actions/deploy-pages`).
+  Repo Settings → Pages → Source is set to "GitHub Actions". There is **no `gh-pages`
+  branch** and `npm run deploy` (`docusaurus deploy`) is NOT the path used — don't run it.
+- **Push:** SSH key `~/.ssh/nextjsnestapi`; use
+  `GIT_SSH_COMMAND="ssh -i ~/.ssh/nextjsnestapi -o IdentitiesOnly=yes"` for git ops.
+- `docusaurus.config.ts` (`url`, `organizationName`, `projectName`, `baseUrl:'/'`) and
+  `static/robots.txt` (`Sitemap:` line) are all already correct — leave them.
+- The old sitemap "outside any Git worktree" error is gone now that the repo has `.git`
+  and the workflow checks out with `fetch-depth: 0`.
+- `gh` CLI is still not installed here; repo-settings changes (Pages source, repo name)
+  need the GitHub web UI or an installed+authed `gh`.
+- After any deploy, confirm the change is actually live before calling it done — the user
+  has asked for this explicitly more than once. Fast check: grep the hashed CSS at
+  `https://nextjsnestapi.github.io/assets/css/*.css` for an expected value; the Actions
+  build+deploy is typically ~1 min.
 
 ## Content conventions
 

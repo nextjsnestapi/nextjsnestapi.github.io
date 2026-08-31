@@ -43,8 +43,17 @@ export class HelloController {
 
 ### 1. Authentication + roles
 
-Use the built-in [`@AuthGuard`](/core-concepts/auth-guard) instead of hand-rolling this as
-middleware:
+Authenticate once in global middleware by putting the user on `context.user`, then let the
+built-in [`@AuthGuard`](/core-concepts/auth-guard) enforce it per route instead of
+hand-rolling the check:
+
+```ts
+app.use(async (context, next) => {
+  const token = context.request?.headers.get("authorization")?.replace("Bearer ", "");
+  context.user = token ? await verifyToken(token) : null;
+  return next();
+});
+```
 
 ```ts
 @Controller("/orders")

@@ -28,7 +28,7 @@ second framework running alongside Next.js. One catch-all route dispatches to pl
 
 - Decorator-based routing (`@Controller`, `@Get`, `@Post`, …)
 - Request body validation via `@Body(DtoClass)` and `class-validator`
-- Authentication guards (`@AuthGuard`/`@CurrentUser`), one `configureAuth` call, no DI container
+- Authentication guards (`@AuthGuard`/`@CurrentUser`) reading a `context.user` your middleware sets, no DI container
 - Global and per-route middleware
 - Auto-generated OpenAPI documents and a self-hosted Swagger UI
 - A CLI (`nextjs-nestapi new` / `init` / `generate controller`) to scaffold projects and

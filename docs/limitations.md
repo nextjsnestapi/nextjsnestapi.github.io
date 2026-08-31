@@ -12,7 +12,7 @@ slug: /limitations
   already uses).
 - **No modules/pipes/interceptors, and one auth guard, not a guard system.** The decorator
   surface intentionally covers routing, DTO validation, middleware, and a single
-  [`@AuthGuard`](/core-concepts/auth-guard)/`configureAuth` mechanism — not the full NestJS
+  [`@AuthGuard`](/core-concepts/auth-guard) built on middleware — not the full NestJS
   feature set.
 - **No route-specificity resolution.** Routes match in declaration order, first match wins
   — see [Controllers & routing](/core-concepts/controllers-and-routing).
